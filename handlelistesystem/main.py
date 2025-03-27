@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from handlelistesystem.models import setup_engine
-from handlelistesystem.routers import index
+from handlelistesystem.routers import history, index
 
 
 def date_format(value: date | Any):
@@ -33,6 +33,7 @@ def create_app():
     templates.env.filters['float_format'] = float_format  # type: ignore
 
     app.include_router(index.create_router(engine, templates))
+    app.include_router(history.create_router(engine, templates))
 
     return app
 

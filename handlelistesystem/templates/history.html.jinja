@@ -1,0 +1,31 @@
+{% extends "base.html.jinja" %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/static/style/history.css">
+<title>Handleliste - historikk</title>
+{% endblock %}
+
+{% block content %}
+<h1>Historikk</h1>
+<ul>
+    <li><a href="/history/today">I dag</a></li>
+    <li><a href="/history/this-week">Denne uka</a></li>
+    <li><a href="/history/previous-month">Forrige måned</a></li>
+</ul>
+<span>Viser {{ period }}</span>
+
+{% for date, items in history.items() %}
+<div>
+    <h2>{{ date|date_format }}</h2>
+    <ul>
+        {% for item in items %}
+        <li>
+            <span>{{ item.name }}</span>
+            <span>{{ item.purchased_at.strftime('%H:%M') }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endfor %}
+{% endblock %}
