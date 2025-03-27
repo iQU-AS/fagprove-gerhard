@@ -1,0 +1,107 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "handlelistesystem"
+version = "0.1.0"
+dependencies = [
+    "fastapi[standard]>=0.109.0",
+    "sqlmodel>=0.0.22",
+    "jinja2>=3.0.0"
+]
+requires-python = ">=3.12"
+
+[project.optional-dependencies]
+dev = [
+    "ruff==0.5.3",
+    "pyright==1.1.389",
+    "black==24.10.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["handlelistesystem", "handlelistesystem*"]
+
+[tool.setuptools.package-data]
+handlelistesystem = ["*.typed"]
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    "tests"
+]
+
+line-length = 150
+indent-width = 4
+fix = false
+
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ['E', 'F', 'A', 'B', 'E', 'N', 'S', 'FBT', 'A001', 'A003', 'PIE', 'Q', 'RET', 'SIM', 'SLF001', 'ARG', 'ERA', 'C90', 'PLE0100', 'PLE0307', 'PLR0911', 'PLR0912', 'PLW0120', 'PLW0406', 'PLW0602', 'PLW0603', 'DTZ001', 'DTZ002', 'DTZ003', 'DTZ004', 'DTZ005', 'DTZ006', 'DTZ007', 'DTZ011', 'DTZ012']
+ignore = ['RET503', 'S101']
+
+fixable = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'I', 'N', 'Q', 'S', 'T', 'W', 'ANN', 'ARG', 'BLE', 'COM', 'DJ', 'DTZ', 'EM', 'ERA', 'EXE', 'FBT', 'ICN', 'INP', 'ISC', 'NPY', 'PD', 'PGH', 'PIE', 'PL', 'PT', 'PTH', 'PYI', 'RET', 'RSE', 'RUF', 'SIM', 'SLF', 'TCH', 'TID', 'TRY', 'UP', 'YTT']
+unfixable = []
+
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = 'double'
+inline-quotes = 'single'
+
+[tool.ruff.lint.flake8-annotations]
+allow-star-arg-any = true
+
+[tool.ruff.lint.mccabe]
+max-complexity = 5
+
+[tool.black]
+target-version = ['py312']
+verbose = true
+skip-string-normalization = true
+line-length = 100
+--extend-exclude = "test_comms"
+
+[tool.pytest.ini_options]
+markers = ["run_comms: Run comms test"]
+
+[tool.pyright]
+reportUnusedFunction = false
+typeCheckingMode = "strict"
+pythonVersion = "3.12"
+pythonPlatform = "Linux"
