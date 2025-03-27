@@ -79,4 +79,16 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
 
         return RedirectResponse(url='/', status_code=303)
 
+    @router.get('/delete/{item_id}')
+    def delete_item(item_id: int):
+        with Session(engine) as session:
+            item = session.get(Item, item_id)
+            if item is None:
+                return RedirectResponse(url='/', status_code=303)
+
+            session.delete(item)
+            session.commit()
+
+        return RedirectResponse(url='/', status_code=303)
+
     return router

@@ -13,6 +13,7 @@
         {% for item in items %}
         <li>
             <button type="submit" name="id" value="{{ item.id }}">{{ item.name }}</button>
+            <a href="/delete/{{ item.id }}">Slett</a>
         </li>
         {% endfor %}
     </form>
