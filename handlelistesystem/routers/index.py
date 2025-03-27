@@ -1,15 +1,22 @@
 from datetime import UTC, datetime, timedelta
-from fastapi import APIRouter, Request
+from typing import Annotated
+from fastapi import APIRouter, Form, Request
+from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
 from sqlalchemy import Engine
 from sqlmodel import Session, col, not_, select
 
 from handlelistesystem.models import Item
 
-RECENT_PURCHASES_LENGHT = timedelta(hours=1)
+RECENT_PURCHASES_LENGHT = timedelta(hours=5)
 
 
-def create_router(engine: Engine, templates: Jinja2Templates):
+class ItemId(BaseModel):
+    id: int
+
+
+def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
     router = APIRouter(prefix='')
 
     @router.get('/')
@@ -36,5 +43,31 @@ def create_router(engine: Engine, templates: Jinja2Templates):
                 'recent_purchases': recent_purchases,
             },
         )
+
+    @router.post('/purchase')
+    def purchase_item(item_id: Annotated[ItemId, Form()]):
+        with Session(engine) as session:
+            item = session.get(Item, item_id.id)
+            if item is None:
+                return RedirectResponse(url='/', status_code=303)
+
+            item.is_purchased = True
+            item.purchased_at = datetime.now(UTC)
+            session.commit()
+
+        return RedirectResponse(url='/', status_code=303)
+
+    @router.post('/unpurchase')
+    def unpurchase_item(item_id: Annotated[ItemId, Form()]):
+        with Session(engine) as session:
+            item = session.get(Item, item_id.id)
+            if item is None:
+                return RedirectResponse(url='/', status_code=303)
+
+            item.is_purchased = False
+            item.purchased_at = None
+            session.commit()
+
+        return RedirectResponse(url='/', status_code=303)
 
     return router
