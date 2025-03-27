@@ -44,6 +44,15 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
             },
         )
 
+    @router.post('/add')
+    def add_item(name: str = Form(...)):
+        with Session(engine) as session:
+            item = Item.model_validate({'name': name})
+            session.add(item)
+            session.commit()
+
+        return RedirectResponse(url='/', status_code=303)
+
     @router.post('/purchase')
     def purchase_item(item_id: Annotated[ItemId, Form()]):
         with Session(engine) as session:

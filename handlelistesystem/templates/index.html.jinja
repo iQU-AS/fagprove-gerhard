@@ -11,16 +11,29 @@
 <ul>
     <form action="/purchase" method="POST">
         {% for item in items %}
-        <li><button type="submit" name="id" value="{{ item.id }}">{{ item.name }}</button></li>
+        <li>
+            <button type="submit" name="id" value="{{ item.id }}">{{ item.name }}</button>
+        </li>
         {% endfor %}
     </form>
 </ul>
-<button>Legg til</button>
+<dialog id="add-item-modal">
+    <form action="/add" method="POST">
+        <label for="name">Navn*</label>
+        <input type="text" name="name">
+        <button value="cancel" formmethod="dialog">Cancel</button>
+        <button type="submit">Legg til</button>
+    </form>
+</dialog>
+<button onclick="document.querySelector('#add-item-modal').showModal()">Legg til</button>
+
 <h2>Nylig handlet</h2>
 <ul>
     <form action="/unpurchase" method="POST">
         {% for item in recent_purchases %}
-        <li><button type="submit" name="id" value="{{ item.id }}">{{ item.name }}</button></li>
+        <li>
+            <button type="submit" name="id" value="{{ item.id }}">{{ item.name }}</button>
+        </li>
         {% endfor %}
     </form>
 </ul>
