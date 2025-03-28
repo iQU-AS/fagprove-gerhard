@@ -1,4 +1,6 @@
+from calendar import week
 from datetime import date
+import locale
 from typing import Any
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
@@ -10,7 +12,11 @@ from handlelistesystem.routers import history, index
 
 def date_format(value: date | Any):
     if isinstance(value, date):
-        return value.strftime('%d/%m-%Y')
+        weekday = value.strftime('%A')
+        date_ = value.strftime('%d')
+        month_abbreviated = value.strftime('%b').rstrip('.')
+        year = value.strftime('%Y')
+        return f'{weekday}, {date_}. {month_abbreviated}, {year}'
     return value
 
 
@@ -21,6 +27,9 @@ def float_format(value: float | Any):
 
 
 def create_app():
+    # Application uses Norwegian locale
+    locale.setlocale(locale.LC_TIME, 'nb_NO.UTF-8')
+
     app = FastAPI()
 
     app.mount('/static', StaticFiles(directory='handlelistesystem/static'), name='static')
