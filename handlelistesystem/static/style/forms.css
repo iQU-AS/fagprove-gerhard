@@ -1,0 +1,73 @@
+.form-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+
+.form-section form .form-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.form-section form label {
+    color: var(--text-2);
+}
+
+.form-section form input[type="text"] {
+    font-size: 1.2rem;
+    padding: 0.5em 0.8em;
+    border-radius: 0.7rem;
+    border: 2px solid var(--background-3);
+    background: #444845;
+    transition: 0.2s;
+}
+
+.form-section form input[type="text"]:focus {
+    border: 2px solid var(--primary);
+
+}
+
+.form-section form input[type="date"] {
+    font-size: 1.2rem;
+    padding: 0.5em 0.8em;
+    border-bottom: solid var(--primary) 5px;
+    border-radius: 0.7rem;
+    background: #444845;
+    transition: 0.2s;
+}
+
+.form-section form input[type="date"]:focus {
+    border-bottom: solid var(--alternate-primary) 5px;
+}
+
+.form-section .errors {
+    margin-top: 1rem;
+    display: block;
+    background-color: var(--danger);
+    border-radius: 0.7rem;
+    border-bottom: solid var(--alternate-danger) 5px;
+    padding: 1em;
+}
+
+.form-section .errors h2 {
+    margin-top: 0;
+}
+
+.form-section .errors ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.form-section .errors li {
+    all: revert;
+}
+
+.form-section .success {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--alternate-primary);
+    text-align: center;
+}

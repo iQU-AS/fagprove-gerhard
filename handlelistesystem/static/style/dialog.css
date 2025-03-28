@@ -1,0 +1,25 @@
+dialog {
+    color: unset;
+    border: none !important;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    background-color: var(--background-2);
+    border-radius: 0.7rem;
+    padding: 1.6rem;
+    min-width: 300px;
+    max-width: 500px;
+    width: auto;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.dialog-content h2 {
+    font-size: 1.8rem;
+    margin-top: 0;
+}

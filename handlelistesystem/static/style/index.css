@@ -1,0 +1,111 @@
+.content {
+    max-width: 45rem;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.items li {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    background: var(--background-2);
+    border-radius: 0.5rem;
+    gap: 0.5rem;
+}
+
+.items li .actions {
+    margin-left: auto;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.circle-check {
+    padding: 0.3em;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.circle-check svg {
+    display: block;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.circle-check .circle {
+    color: var(--alternate-default-color);
+    transition: 0.2s;
+}
+
+.circle-check .checkmark {
+    position: absolute;
+    left: 0.3em;
+    top: 0.3em;
+    opacity: 0;
+    transition: 0.2s;
+    color: var(--alternate-default-color);
+}
+
+.circle-check:hover .checkmark {
+    opacity: 1;
+}
+
+.circle-check:hover .circle {
+    opacity: 0;
+}
+
+.add-task {
+    font-size: 1rem;
+    text-align: center;
+    font-weight: bold;
+    padding: 0.5em 0.5em;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.add-task * {
+    transition: 0.2s;
+}
+
+.add-task .icon {
+    padding: 0.3rem;
+}
+
+.add-task svg {
+    color: var(--alternate-default-color);
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 100%;
+    padding: 0.1em;
+}
+
+.add-task:hover svg, .add-task:focus-visible svg {
+    background-color: var(--alternate-primary);
+    color: var(--opposite-text-1);
+}
+
+.add-task:hover span, .add-task:focus-visible span {
+    color: var(--alternate-default-color);
+}
+
+.button-row {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: stretch;
+    width: 100%;
+}
+
+.button-row * {
+    flex: 1;
+}

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
     <link rel="stylesheet" href="/static/style/global.css">
+    <link rel="stylesheet" href="/static/style/nav.css">
     {% endblock %}
 </head>
 
@@ -14,27 +15,18 @@
     <nav>
         {% block nav %}
         <ul>
-            <li><a href="/">Handleliste</a></li>
-            <li><a href="/history">Historikk</a></li>
+            <li><a class="site-title" href="/">Handleliste</a></li>
+            <div class="links">
+                <li><a href="/history">Historikk</a></li>
+            </div>
         </ul>
         {% endblock %}
     </nav>
     <main>
-        {% block content %}
-        <h1>Handleliste</h1>
-        <ul>
-            {% for item in items %}
-            <li><button>{{ item.name }}</button></li>
-            {% endfor %}
-        </ul>
-        <button>Legg til</button>
-        <h2>Nylig handlet</h2>
-        <ul>
-            {% for item in recent_purchases %}
-            <li><button>{{ item.name }}</button></li>
-            {% endfor %}
-        </ul>
-        {% endblock %}
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
     </main>
 </body>
 

@@ -3,41 +3,76 @@
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="/static/style/index.css">
+<link rel="stylesheet" href="/static/style/forms.css">
+<link rel="stylesheet" href="/static/style/dialog.css">
 <title>Handleliste</title>
 {% endblock %}
 
 {% block content %}
 <h1>Handleliste</h1>
-<ul>
-    <form action="/purchase" method="POST">
+<form action="/purchase" method="POST">
+    <ul class="items">
         {% for item in items %}
         <li>
-            <button type="submit" name="id" value="{{ item.id }}">{{ item.name }}</button>
-            <a href="/delete/{{ item.id }}">Slett</a>
+            <button type="submit" name="id" value="{{ item.id }}" class="circle-check">
+                {% with arguments='class="circle neutral"' %}
+                {% include 'snippets/circle-nocheck.svg.jinja' %}
+                {% endwith %}
+                {% with arguments='class=checkmark' %}
+                {% include 'snippets/circle-check.svg.jinja'%}
+                {% endwith %}
+            </button>
+            <span>{{ item.name }}</span>
+            <div class="actions">
+                <a class="icon-button danger ghost" href="/delete/{{ item.id }}">
+                    {% include 'snippets/trash.svg.jinja' %}
+                </a>
+            </div>
         </li>
         {% endfor %}
-    </form>
-</ul>
+    </ul>
+</form>
 <dialog id="add-item-modal">
-    <h3>Legg til vare</h3>
-    <form action="/add" method="POST">
-        <label for="name">Navn*</label>
-        <input type="text" name="name">
-        <button value="cancel" formmethod="dialog">Cancel</button>
-        <button type="submit">Legg til</button>
-    </form>
+    <div class="dialog-content">
+        <h2>Legg til vare</h2>
+        <div class="form-section">
+            <form action="/add" method="POST">
+                <div class="form-entry">
+                    <label for="name">Navn*</label>
+                    <input type="text" name="name">
+                </div>
+                <div class="button-row">
+                    <button class="button neutral" value="cancel" formmethod="dialog">Cancel</button>
+                    <button class="button primary" type="submit">Legg til</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </dialog>
-<button onclick="document.querySelector('#add-item-modal').showModal()">Legg til</button>
+<button class="add-task" onclick="document.querySelector('#add-item-modal').showModal()">
+    <div class="icon">
+        {% include 'snippets/plus.svg.jinja' %}
+    </div>
+    <span>Legg til vare</span>
+</button>
 
 <h2>Nylig handlet</h2>
-<ul>
-    <form action="/unpurchase" method="POST">
+<form action="/unpurchase" method="POST">
+    <ul class="items">
         {% for item in recent_purchases %}
         <li>
-            <button type="submit" name="id" value="{{ item.id }}">{{ item.name }}</button>
+            <button class="circle-check" type="submit" name="id" value="{{ item.id }}">
+                {% with arguments='class="circle"' %}
+                {% include 'snippets/circle-check.svg.jinja' %}
+                {% endwith %}
+                {% with arguments='class="checkmark danger"' %}
+                {% include 'snippets/circle-nocheck.svg.jinja'%}
+                {% endwith %}
+            </button>
+            <span>{{item.name}}</span>
         </li>
         {% endfor %}
-    </form>
-</ul>
+    </ul>
+</form>
 </div>
 {% endblock %}
