@@ -68,7 +68,7 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
             {
                 'request': request,
                 'history': history,
-                'period': period,
+                'period': period.value,
             },
         )
 

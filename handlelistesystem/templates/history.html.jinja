@@ -8,24 +8,37 @@
 
 {% block content %}
 <h1>Historikk</h1>
-<ul>
-    <li><a href="/history/today">I dag</a></li>
-    <li><a href="/history/this-week">Denne uka</a></li>
-    <li><a href="/history/previous-month">Forrige måned</a></li>
+<ul class="period-selector">
+    <a class="button {{ 'primary' if period == 'today' else 'neutral' }}" href="/history/today">
+        <li>I dag</li>
+    </a>
+    <a class="button {{ 'primary' if period == 'this-week' else 'neutral' }}" href="/history/this-week">
+        <li>Denne uka</li>
+    </a>
+    <a class="button {{ 'primary' if period == 'previous-month' else 'neutral' }}" href="/history/previous-month">
+        <li>Forrige måned</li>
+    </a>
 </ul>
-<span>Viser {{ period }}</span>
 
-{% for date, items in history.items() %}
-<div>
-    <h2>{{ date|date_format }}</h2>
-    <ul>
-        {% for item in items %}
-        <li>
-            <span>{{ item.name }}</span>
-            <span>{{ item.purchased_at.strftime('%H:%M') }}</span>
-        </li>
-        {% endfor %}
-    </ul>
-</div>
-{% endfor %}
+<section class="history-list">
+    {% if not history %}
+    <p class="no-history">Ingen historikk for denne perioden.</p>
+    {% endif %}
+    {% for date, items in history.items() %}
+    <div class="history-day">
+        <h2>{{ date|date_format }}</h2>
+        <ul>
+            {% for item in items %}
+            <li>
+                <span class="name">{{ item.name }}</span>
+                <span class="time">{{ item.purchased_at.strftime('%H:%M') }}</span>
+            </li>
+            {% if not loop.last %}
+            <hr>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</section>
 {% endblock %}
