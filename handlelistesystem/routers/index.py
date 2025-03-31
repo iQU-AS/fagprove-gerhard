@@ -25,13 +25,14 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
         print(now + timedelta(hours=1))
 
         with Session(engine) as session:
-            query = select(Item).where(not_(Item.is_purchased))
+            query = select(Item).where(not_(Item.is_purchased)).order_by(col(Item.updated_at))
             items = session.exec(query).all()
 
             query = (
                 select(Item)
                 .where(Item.is_purchased)
                 .where(col(Item.purchased_at) > now - RECENT_PURCHASES_LENGHT)
+                .order_by(col(Item.updated_at))
             )
             recent_purchases = session.exec(query).all()
 

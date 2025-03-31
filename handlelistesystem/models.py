@@ -27,3 +27,10 @@ class Item(SQLModel, table=True):
     is_purchased: Annotated[bool, Field(index=True)] = False
     purchased_at: Annotated[datetime | None, Field(index=True)] = None
     created_at: Annotated[datetime, Field(default_factory=lambda: datetime.now(UTC))]
+    updated_at: Annotated[
+        datetime,
+        Field(
+            default_factory=lambda: datetime.now(UTC),
+            sa_column_kwargs={'onupdate': lambda: datetime.now(UTC)},
+        ),
+    ]

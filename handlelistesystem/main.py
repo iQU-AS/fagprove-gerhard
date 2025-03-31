@@ -1,4 +1,3 @@
-from calendar import week
 from datetime import date
 import locale
 from typing import Any
