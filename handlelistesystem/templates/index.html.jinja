@@ -23,6 +23,7 @@
                 {% endwith %}
             </button>
             <span>{{ item.name }}</span>
+            <span>{{item.created_by_user.username}}</span>
             <div class="actions">
                 <a class="icon-button danger ghost" href="/delete/{{ item.id }}">
                     {% include 'snippets/trash.svg.jinja' %}
@@ -70,6 +71,8 @@
                 {% endwith %}
             </button>
             <span>{{item.name}}</span>
+            <span>{{item.created_by_user.username}}</span>
+            <span>{{item.purchased_by_user.username}}</span>
         </li>
         {% endfor %}
     </ul>

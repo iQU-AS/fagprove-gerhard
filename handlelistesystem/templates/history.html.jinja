@@ -31,6 +31,8 @@
             {% for item in items %}
             <li>
                 <span class="name">{{ item.name }}</span>
+                <span>{{ item.created_by_user.username }}</span>
+                <span>{{ item.purchased_by_user.username }}</span>
                 <span class="time">{{ item.purchased_at.strftime('%H:%M') }}</span>
             </li>
             {% if not loop.last %}
