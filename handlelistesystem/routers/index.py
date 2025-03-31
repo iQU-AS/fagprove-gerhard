@@ -9,7 +9,7 @@ from sqlmodel import Session, col, not_, select
 
 from handlelistesystem.models import Item
 
-RECENT_PURCHASES_LENGHT = timedelta(hours=5)
+RECENT_PURCHASES_DURATION = timedelta(hours=1)
 
 
 class ItemId(BaseModel):
@@ -31,7 +31,7 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
             query = (
                 select(Item)
                 .where(Item.is_purchased)
-                .where(col(Item.purchased_at) > now - RECENT_PURCHASES_LENGHT)
+                .where(col(Item.purchased_at) > now - RECENT_PURCHASES_DURATION)
                 .order_by(col(Item.updated_at))
             )
             recent_purchases = session.exec(query).all()
