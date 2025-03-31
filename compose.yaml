@@ -1,0 +1,13 @@
+services:
+  web:
+    image: iqugerhard/handlelistesystem
+    ports:
+      - "80:80"
+    volumes:
+      - database:/database
+    environment:
+      - SQLITE_DB=/database/database.db
+    restart: always
+
+volumes:
+  database:
