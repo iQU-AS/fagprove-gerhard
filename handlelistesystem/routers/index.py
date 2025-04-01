@@ -1,6 +1,6 @@
 from datetime import UTC, datetime, timedelta
 from typing import Annotated
-from fastapi import APIRouter, Depends, Form, Request
+from fastapi import APIRouter, Depends, Form, Request, Security
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
@@ -19,9 +19,9 @@ class ItemId(BaseModel):
 
 
 def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
-    router = APIRouter(prefix='')
-
     get_user_redirect = get_user_redirect_dependency(engine)
+
+    router = APIRouter(prefix='', dependencies=[Security(get_user_redirect, scopes=['viewer'])])
 
     @router.get('/')
     def get_grocery_list(request: Request):
@@ -63,7 +63,7 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
 
     @router.post('/add')
     def add_item(
-        user: Annotated[User, Depends(get_user_redirect)],
+        user: Annotated[User, Security(get_user_redirect, scopes=['member'])],
         name: Annotated[str, Form(...)],
     ):
         with Session(engine) as session:
@@ -75,7 +75,7 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
 
     @router.post('/purchase')
     def purchase_item(
-        user: Annotated[User, Depends(get_user_redirect)],
+        user: Annotated[User, Security(get_user_redirect, scopes=['member'])],
         item_id: Annotated[ItemId, Form()],
     ):
         with Session(engine) as session:
@@ -90,7 +90,7 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
 
         return RedirectResponse(url='/', status_code=303)
 
-    @router.post('/unpurchase')
+    @router.post('/unpurchase', dependencies=[Security(get_user_redirect, scopes=['member'])])
     def unpurchase_item(item_id: Annotated[ItemId, Form()]):
         with Session(engine) as session:
             item = session.get(Item, item_id.id)
@@ -104,7 +104,7 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
 
         return RedirectResponse(url='/', status_code=303)
 
-    @router.get('/delete/{item_id}')
+    @router.get('/delete/{item_id}', dependencies=[Security(get_user_redirect, scopes=['member'])])
     def delete_item(item_id: int):
         with Session(engine) as session:
             item = session.get(Item, item_id)

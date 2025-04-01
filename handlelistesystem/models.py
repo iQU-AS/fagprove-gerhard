@@ -1,4 +1,5 @@
 from datetime import UTC, datetime
+from enum import Enum
 from typing import Annotated, Optional
 from sqlalchemy import Engine
 from sqlmodel import Field, Relationship, SQLModel, create_engine, text
@@ -55,10 +56,28 @@ class Item(SQLModel, table=True):
     )
 
 
+class UserRole(Enum):
+    ADMIN = 'admin'
+    MEMBER = 'member'
+    VIEWER = 'viewer'
+
+    def __lt__(self, other: 'UserRole') -> bool:
+        """Allows comparison of UserRole instances."""
+        if not isinstance(other, UserRole):  # type: ignore # failsafe
+            return NotImplemented
+        if self == other:
+            return False
+        self_index = list(UserRole).index(self)
+        other_index = list(UserRole).index(other)
+        return self_index < other_index
+
+
 class User(SQLModel, table=True):
     id: Annotated[int | None, Field(primary_key=True)] = None
     username: str
     password: str
+
+    role: UserRole
 
     created_items: list[Item] = Relationship(
         back_populates='created_by_user',

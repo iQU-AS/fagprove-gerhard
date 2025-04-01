@@ -2,12 +2,13 @@ from collections import defaultdict
 from datetime import UTC, date, datetime, timedelta
 from enum import Enum
 from typing import cast
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Depends, Request, Security
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import Engine
 from sqlalchemy.orm import selectinload
 from sqlmodel import Session, col, select
 
+from handlelistesystem.dependencies.auth import get_user_redirect_dependency
 from handlelistesystem.models import Item
 
 RECENT_PURCHASES_LENGHT = timedelta(hours=5)
@@ -20,7 +21,9 @@ class Period(Enum):
 
 
 def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
-    router = APIRouter(prefix='/history')
+    get_user_redirect = get_user_redirect_dependency(engine)
+
+    router = APIRouter(prefix='/history', dependencies=[Security(get_user_redirect)])
 
     @router.get('/')
     def get_history_root(request: Request):

@@ -2,6 +2,7 @@ from datetime import UTC, datetime, timedelta
 from typing import Annotated
 
 import bcrypt
+from fastapi.security import SecurityScopes
 import jwt
 from fastapi import Depends, HTTPException, Request, status
 from jwt.exceptions import InvalidTokenError
@@ -9,7 +10,7 @@ from sqlalchemy import Engine
 from sqlmodel import Session, select
 
 from handlelistesystem.config import SECRET_KEY
-from handlelistesystem.models import User
+from handlelistesystem.models import User, UserRole
 
 ALGORITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_DURATION = timedelta(minutes=30)
@@ -39,7 +40,7 @@ def get_access_token(request: Request):
 
 
 def get_user_dependency(engine: Engine):
-    def get_user(token: Annotated[str, Depends(get_access_token)]):
+    def get_user(role: UserRole, token: Annotated[str, Depends(get_access_token)]):
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Could not validate credentials',
@@ -59,6 +60,13 @@ def get_user_dependency(engine: Engine):
         if user is None:
             raise credentials_exception
 
+        if user.role < role:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail='Not enough permissions',
+                headers={'WWW-Authenticate': 'Bearer'},
+            )
+
         return user
 
     return get_user
@@ -67,14 +75,15 @@ def get_user_dependency(engine: Engine):
 def get_user_redirect_dependency(engine: Engine):
     get_current_user = get_user_dependency(engine)
 
-    def get_user_redirect(token: Annotated[str, Depends(get_access_token)]):
+    def get_user_redirect(role: UserRole, token: Annotated[str, Depends(get_access_token)]):
         print(token)
         try:
-            user = get_current_user(token)
+            user = get_current_user(role, token)
         except HTTPException as e:
             raise HTTPException(
                 status_code=303,
                 headers={'Location': '/login'},
+                detail=e.detail,
             ) from e
         return user
 

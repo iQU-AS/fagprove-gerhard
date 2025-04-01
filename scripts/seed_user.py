@@ -1,6 +1,6 @@
 import bcrypt
 from sqlmodel import Session
-from handlelistesystem.models import User, setup_engine
+from handlelistesystem.models import User, UserRole, setup_engine
 
 
 def main():
@@ -9,7 +9,7 @@ def main():
     with Session(engine) as session:
         password = b'gerhard'
         hashed = bcrypt.hashpw(password, bcrypt.gensalt())
-        user = User(username='gerhard', password=hashed.decode())
+        user = User(username='gerhard', password=hashed.decode(), role=UserRole.VIEWER)
         session.add(user)
         session.commit()
         session.refresh(user)
