@@ -12,7 +12,13 @@ def main():
 
     with Session(engine) as session:
         while current < now:
-            item = Item(name='Item', is_purchased=True, purchased_at=current)
+            item = Item(
+                name='Item',
+                is_purchased=True,
+                purchased_at=current,
+                purchased_by_user_id=1,
+                created_by_user_id=1,
+            )
             current += timedelta(minutes=randint(0, 60 * 24 * 2))
             session.add(item)
         session.commit()
