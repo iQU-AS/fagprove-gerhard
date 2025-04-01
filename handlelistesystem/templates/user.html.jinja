@@ -1,0 +1,20 @@
+{% extends "base.html.jinja" %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/static/style/user.css">
+<link rel="stylesheet" href="/static/style/forms.css">
+<title>Handleliste - Logg inn</title>
+{% endblock %}
+
+{% block content %}
+<h1>Min side: {{ user.username }}</h1>
+<span class="user-info">Rolle: {{ user.role }}</span>
+<section class="actions">
+    <a class="button neutral" href="/user/logout">Logg ut</a>
+    <button class="button neutral" onclick="document.querySelector('#change-password-modal').showModal()">Endre
+        passord</button>
+    <button class="button danger" onclick="document.querySelector('#delete-account-modal').showModal()">Slett
+        konto</button>
+</section>
+{% endblock %}

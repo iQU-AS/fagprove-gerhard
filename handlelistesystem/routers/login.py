@@ -9,8 +9,6 @@ from sqlalchemy import Engine
 from handlelistesystem.dependencies.auth import authenticate_user, create_access_token
 from handlelistesystem.helpers.flash import flash
 
-RECENT_PURCHASES_DURATION = timedelta(hours=1)
-
 
 class LoginForm(BaseModel):
     username: str
