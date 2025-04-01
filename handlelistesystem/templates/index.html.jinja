@@ -22,8 +22,12 @@
                 {% include 'snippets/circle-check.svg.jinja'%}
                 {% endwith %}
             </button>
-            <span>{{ item.name }}</span>
-            <span>{{item.created_by_user.username}}</span>
+            <div class="info">
+                <span class="name">{{ item.name }}</span>
+                <div class="user-info">
+                    <span>Etterspurt: {{ item.created_by_user.username }}</span>
+                </div>
+            </div>
             <div class="actions">
                 <a class="icon-button danger ghost" href="/delete/{{ item.id }}">
                     {% include 'snippets/trash.svg.jinja' %}
@@ -70,9 +74,13 @@
                 {% include 'snippets/circle-nocheck.svg.jinja'%}
                 {% endwith %}
             </button>
-            <span>{{item.name}}</span>
-            <span>{{item.created_by_user.username}}</span>
-            <span>{{item.purchased_by_user.username}}</span>
+            <div class="info">
+                <span class="name">{{ item.name }}</span>
+                <div class="user-info">
+                    <span>Etterspurt: {{ item.purchased_by_user.username or '...'}}</span><span>, kjøpt: {{
+                        item.created_by_user.username or '...'}}</span>
+                </div>
+            </div>
         </li>
         {% endfor %}
     </ul>

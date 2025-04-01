@@ -18,6 +18,22 @@
     gap: 0.5rem;
 }
 
+.items li .info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.items li .info .name {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.items li .info .user-info {
+    font-size: 0.9rem;
+    color: var(--text-2);
+}
+
 .items li .actions {
     margin-left: auto;
     display: flex;
