@@ -9,7 +9,7 @@ def main():
     with Session(engine) as session:
         password = b'gerhard'
         hashed = bcrypt.hashpw(password, bcrypt.gensalt())
-        user = User(username='gerhard', password=hashed.decode(), role=UserRole.VIEWER)
+        user = User(username='gerhard', password=hashed.decode(), role=UserRole.ADMIN)
         session.add(user)
         session.commit()
         session.refresh(user)

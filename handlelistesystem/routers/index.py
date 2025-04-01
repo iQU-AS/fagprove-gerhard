@@ -19,9 +19,7 @@ class ItemId(BaseModel):
 
 
 def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
-    router = APIRouter(
-        prefix='', dependencies=[Depends(UserRedirectDependency(engine, role=UserRole.VIEWER))]
-    )
+    router = APIRouter(prefix='', dependencies=[Depends(UserRedirectDependency(engine))])
 
     @router.get('/')
     def get_grocery_list(request: Request):

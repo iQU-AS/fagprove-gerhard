@@ -70,7 +70,7 @@ class UserDependency:
 
 
 class UserRedirectDependency:
-    def __init__(self, engine: Engine, *, role: UserRole):
+    def __init__(self, engine: Engine, *, role: UserRole = UserRole.VIEWER):
         self.engine = engine
         self.role = role
         self.user_dependency = UserDependency(engine, role=role)

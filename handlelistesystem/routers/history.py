@@ -23,7 +23,7 @@ class Period(Enum):
 def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
     router = APIRouter(
         prefix='/history',
-        dependencies=[Security(UserRedirectDependency(engine, role=UserRole.VIEWER))],
+        dependencies=[Security(UserRedirectDependency(engine))],
     )
 
     @router.get('/')
