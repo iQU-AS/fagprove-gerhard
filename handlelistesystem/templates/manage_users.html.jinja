@@ -1,0 +1,34 @@
+{% extends "base.html.jinja" %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/static/style/manage_users.css">
+<link rel="stylesheet" href="/static/style/forms.css">
+<title>Handleliste - Behandle brukere</title>
+{% endblock %}
+
+{% block content %}
+<h1>Behandle brukere</h1>
+
+<section class="users">
+    <h2>Brukere</h2>
+    <ul>
+        {% for user in users %}
+        <li>
+            <div class="info">
+                <div class="role">{{ user.role.value|upper }}</div>
+                <div class="name">{{ user.username }}</div>
+            </div>
+            <div class="actions">
+                <a class="icon-button primary ghost" href="/users/remove-admin/{{ user.id }}">
+                    {% include 'snippets/edit.svg.jinja' %}
+                </a>
+                <a class="icon-button danger ghost" href="/users/{{ user.id }}/delete">
+                    {% include 'snippets/trash.svg.jinja' %}
+                </a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

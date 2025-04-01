@@ -9,7 +9,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from handlelistesystem.config import SECRET_KEY
 from handlelistesystem.helpers.flash import get_flashed_messages
 from handlelistesystem.models import setup_engine
-from handlelistesystem.routers import history, index, login, user
+from handlelistesystem.routers import history, index, login, users
 
 
 def date_format(value: date | Any):
@@ -48,7 +48,7 @@ def create_app():
     app.include_router(index.create_router(engine, templates))
     app.include_router(history.create_router(engine, templates))
     app.include_router(login.create_router(engine, templates))
-    app.include_router(user.create_router(engine, templates))
+    app.include_router(users.create_router(engine, templates))
 
     return app
 
