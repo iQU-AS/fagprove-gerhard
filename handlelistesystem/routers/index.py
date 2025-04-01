@@ -8,8 +8,8 @@ from sqlalchemy import Engine
 from sqlalchemy.orm import selectinload
 from sqlmodel import Session, col, not_, select
 
-from handlelistesystem.dependencies import get_user_redirect
-from handlelistesystem.models import Item
+from handlelistesystem.dependencies.auth import get_user_redirect_dependency
+from handlelistesystem.models import Item, User
 
 RECENT_PURCHASES_DURATION = timedelta(hours=1)
 
@@ -20,6 +20,8 @@ class ItemId(BaseModel):
 
 def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
     router = APIRouter(prefix='')
+
+    get_user_redirect = get_user_redirect_dependency(engine)
 
     @router.get('/')
     def get_grocery_list(request: Request):
@@ -61,11 +63,11 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
 
     @router.post('/add')
     def add_item(
-        user_id: Annotated[int, Depends(get_user_redirect)],
+        user: Annotated[User, Depends(get_user_redirect)],
         name: Annotated[str, Form(...)],
     ):
         with Session(engine) as session:
-            item = Item(name=name, created_by_user_id=user_id)
+            item = Item(name=name, created_by_user=user)
             session.add(item)
             session.commit()
 
@@ -73,7 +75,7 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
 
     @router.post('/purchase')
     def purchase_item(
-        user_id: Annotated[int, Depends(get_user_redirect)],
+        user: Annotated[User, Depends(get_user_redirect)],
         item_id: Annotated[ItemId, Form()],
     ):
         with Session(engine) as session:
@@ -82,7 +84,7 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
                 return RedirectResponse(url='/', status_code=303)
 
             item.is_purchased = True
-            item.purchased_by_user_id = user_id
+            item.purchased_by_user = user
             item.purchased_at = datetime.now(UTC)
             session.commit()
 

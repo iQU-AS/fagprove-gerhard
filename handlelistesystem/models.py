@@ -58,6 +58,7 @@ class Item(SQLModel, table=True):
 class User(SQLModel, table=True):
     id: Annotated[int | None, Field(primary_key=True)] = None
     username: str
+    password: str
 
     created_items: list[Item] = Relationship(
         back_populates='created_by_user',
