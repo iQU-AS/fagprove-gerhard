@@ -10,15 +10,4 @@ def flash(request: Request, message: str, category: Category = 'error'):
 
 
 def get_flashed_messages(request: Request):
-    # return request.session.pop('_flashes', defaultdict(list))
-    # test example
-    return {
-        'success': [
-            'Success message 1',
-            'Success message 2',
-        ],
-        'error': [
-            'Error message 1',
-            'Error message 2',
-        ],
-    }
+    return request.session.pop('_flashes', defaultdict(list))
