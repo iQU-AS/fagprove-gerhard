@@ -57,9 +57,10 @@ class Item(SQLModel, table=True):
 
 
 class UserRole(Enum):
-    ADMIN = 'admin'
-    MEMBER = 'member'
+    # least privileged to most privileged
     VIEWER = 'viewer'
+    MEMBER = 'member'
+    ADMIN = 'admin'
 
     def __lt__(self, other: 'UserRole') -> bool:
         """Allows comparison of UserRole instances."""

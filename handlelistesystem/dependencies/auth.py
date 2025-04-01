@@ -2,7 +2,6 @@ from datetime import UTC, datetime, timedelta
 from typing import Annotated
 
 import bcrypt
-from fastapi.security import SecurityScopes
 import jwt
 from fastapi import Depends, HTTPException, Request, status
 from jwt.exceptions import InvalidTokenError
@@ -39,8 +38,12 @@ def get_access_token(request: Request):
     return request.cookies.get('access_token')
 
 
-def get_user_dependency(engine: Engine):
-    def get_user(role: UserRole, token: Annotated[str, Depends(get_access_token)]):
+class UserDependency:
+    def __init__(self, engine: Engine, *, role: UserRole):
+        self.engine = engine
+        self.role = role
+
+    def __call__(self, token: Annotated[str, Depends(get_access_token)]):
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Could not validate credentials',
@@ -50,17 +53,14 @@ def get_user_dependency(engine: Engine):
             payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
             user_id = payload.get('sub')
         except InvalidTokenError as e:
-            print('mhmm')
             raise credentials_exception from e
 
-        print(user_id)
-
-        with Session(engine) as session:
+        with Session(self.engine) as session:
             user = session.get(User, user_id)
         if user is None:
             raise credentials_exception
 
-        if user.role < role:
+        if user.role < self.role:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail='Not enough permissions',
@@ -69,16 +69,11 @@ def get_user_dependency(engine: Engine):
 
         return user
 
-    return get_user
 
-
-def get_user_redirect_dependency(engine: Engine):
-    get_current_user = get_user_dependency(engine)
-
-    def get_user_redirect(role: UserRole, token: Annotated[str, Depends(get_access_token)]):
-        print(token)
+class UserRedirectDependency(UserDependency):
+    def __call__(self, token: Annotated[str, Depends(get_access_token)]):
         try:
-            user = get_current_user(role, token)
+            user = super().__call__(token)
         except HTTPException as e:
             raise HTTPException(
                 status_code=303,
@@ -86,5 +81,3 @@ def get_user_redirect_dependency(engine: Engine):
                 detail=e.detail,
             ) from e
         return user
-
-    return get_user_redirect
