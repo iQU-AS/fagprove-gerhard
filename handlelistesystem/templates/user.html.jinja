@@ -8,13 +8,22 @@
 {% endblock %}
 
 {% block content %}
-<h1>Min side: {{ user.username }}</h1>
-<span class="user-info">Rolle: {{ user.role }}</span>
+<h1>Min side</h1>
+
+<section class="user-info">
+    <h2>Brukerinformasjon</h2>
+    <p><strong>Brukernavn:</strong> {{ user.username }}</p>
+    <p><strong>Rolle:</strong> {{ user.role.value|upper }}</p>
+</section>
+
 <section class="actions">
+    <a class="button neutral">Behandle brukere</a>
     <a class="button neutral" href="/user/logout">Logg ut</a>
     <button class="button neutral" onclick="document.querySelector('#change-password-modal').showModal()">Endre
         passord</button>
     <a class="button danger" href="/user/delete">Slett
         konto</a>
+    {% if user.role.value == 'admin' %}
+    {% endif %}
 </section>
 {% endblock %}
