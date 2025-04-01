@@ -2,17 +2,26 @@
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" href="/static/style/index.css">
+<link rel="stylesheet" href="/static/style/login.css">
 <link rel="stylesheet" href="/static/style/forms.css">
-<link rel="stylesheet" href="/static/style/dialog.css">
 <title>Handleliste - Logg inn</title>
 {% endblock %}
 
 {% block content %}
 <h1>Logg inn</h1>
-<form method="POST" action="/login">
-    <input type="text" name="username" placeholder="Brukernavn" required>
-    <input type="password" name="password" placeholder="Passord" required>
-    <input type="submit" value="Logg inn">
-</form>
+<div class="form-section">
+    <form method="POST" action="/login">
+        <div class="form-entry">
+            <label for="username">Brukernavn*</label>
+            <input type="text" name="username" required>
+        </div>
+        <div class="form-entry">
+            <label for="username">Passord*</label>
+            <input type="password" name="password" required>
+        </div>
+        <div class="button-row">
+            <button class="button primary" type="submit">Logg inn</button>
+        </div>
+    </form>
+</div>
 {% endblock %}

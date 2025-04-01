@@ -7,6 +7,7 @@ from pydantic import BaseModel
 from sqlalchemy import Engine
 
 from handlelistesystem.dependencies.auth import authenticate_user, create_access_token
+from handlelistesystem.helpers.flash import flash
 
 RECENT_PURCHASES_DURATION = timedelta(hours=1)
 
@@ -32,11 +33,14 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
         )
 
         if not user:
+            flash(
+                request,
+                'Feil brukernavn eller passord',
+            )
             return templates.TemplateResponse(
                 'login.html.jinja',
                 {
                     'request': request,
-                    'error': 'Invalid username or password',
                 },
             )
         assert user.id is not None

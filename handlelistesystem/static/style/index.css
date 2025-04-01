@@ -97,15 +97,3 @@
     color: var(--alternate-default-color);
 }
 
-.button-row {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-    justify-content: stretch;
-    width: 100%;
-}
-
-.button-row * {
-    flex: 1;
-}

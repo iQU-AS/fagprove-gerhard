@@ -14,7 +14,9 @@
     color: var(--text-2);
 }
 
-.form-section form input[type="text"] {
+.form-section form input[type="text"],
+.form-section form input[type="email"],
+.form-section form input[type="password"] {
     font-size: 1.2rem;
     padding: 0.5em 0.8em;
     border-radius: 0.7rem;
@@ -23,22 +25,24 @@
     transition: 0.2s;
 }
 
-.form-section form input[type="text"]:focus {
+.form-section form input[type="text"]:focus,
+.form-section form input[type="email"]:focus,
+.form-section form input[type="password"]:focus {
     border: 2px solid var(--primary);
 
 }
 
-.form-section form input[type="date"] {
-    font-size: 1.2rem;
-    padding: 0.5em 0.8em;
-    border-bottom: solid var(--primary) 5px;
-    border-radius: 0.7rem;
-    background: #444845;
-    transition: 0.2s;
+.button-row {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: stretch;
+    width: 100%;
 }
 
-.form-section form input[type="date"]:focus {
-    border-bottom: solid var(--alternate-primary) 5px;
+.button-row * {
+    flex: 1;
 }
 
 .form-section .errors {

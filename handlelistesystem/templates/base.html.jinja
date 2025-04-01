@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="no">
 
+{% set flashes = get_flashed_messages(request) %}
+
 <head>
     {% block head %}
     <meta charset="UTF-8">
@@ -25,6 +27,19 @@
     <main>
         <div class="content">
             {% block content %}
+            {% endblock %}
+
+            {% block flashes %}
+            {% for error in flashes.error %}
+            <div class="error">
+                <p>{{ error }}</p>
+            </div>
+            {% endfor %}
+            {% for success in flashes.success %}
+            <div class="success">
+                <p>{{ success }}</p>
+            </div>
+            {% endfor %}
             {% endblock %}
         </div>
     </main>

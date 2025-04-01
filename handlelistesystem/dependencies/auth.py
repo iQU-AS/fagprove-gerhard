@@ -9,6 +9,7 @@ from sqlalchemy import Engine
 from sqlmodel import Session, select
 
 from handlelistesystem.config import SECRET_KEY
+from handlelistesystem.helpers.flash import flash
 from handlelistesystem.models import User, UserRole
 
 ALGORITHM = 'HS256'
@@ -47,7 +48,6 @@ class UserDependency:
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Could not validate credentials',
-            headers={'WWW-Authenticate': 'Bearer'},
         )
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -64,20 +64,29 @@ class UserDependency:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail='Not enough permissions',
-                headers={'WWW-Authenticate': 'Bearer'},
             )
 
         return user
 
 
-class UserRedirectDependency(UserDependency):
-    def __call__(self, token: Annotated[str, Depends(get_access_token)]):
+class UserRedirectDependency:
+    def __init__(self, engine: Engine, *, role: UserRole):
+        self.engine = engine
+        self.role = role
+        self.user_dependency = UserDependency(engine, role=role)
+
+    def __call__(self, request: Request, token: Annotated[str, Depends(get_access_token)]):
         try:
-            user = super().__call__(token)
+            user = self.user_dependency(token)
         except HTTPException as e:
+            if e.status_code == status.HTTP_403_FORBIDDEN:
+                flash(request, 'Du har ikke tilgang')
+                raise HTTPException(
+                    status_code=status.HTTP_303_SEE_OTHER,
+                    headers={'Location': request.headers.get('referer', '/')},
+                ) from e
             raise HTTPException(
-                status_code=303,
+                status_code=status.HTTP_303_SEE_OTHER,
                 headers={'Location': '/login'},
-                detail=e.detail,
             ) from e
         return user

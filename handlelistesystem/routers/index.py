@@ -27,6 +27,8 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
     def get_grocery_list(request: Request):
         now = datetime.now(UTC)
 
+        print(request.session.pop('flash_error', 'no'))
+
         with Session(engine) as session:
             query = (
                 select(Item)
