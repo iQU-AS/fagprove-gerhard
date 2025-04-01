@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
     <link rel="stylesheet" href="/static/style/global.css">
+    <link rel="stylesheet" href="/static/style/flashes.css">
     <link rel="stylesheet" href="/static/style/nav.css">
     {% endblock %}
 </head>
@@ -29,20 +30,27 @@
         <div class="content">
             {% block content %}
             {% endblock %}
-
-            {% block flashes %}
+        </div>
+        {% block flashes %}
+        <section class="flashes">
             {% for error in flashes.error %}
-            <div class="error">
+            <div class="message danger">
                 <p>{{ error }}</p>
+                <a class="close icon-button danger" onclick="this.parentElement.remove()">
+                    {% include 'snippets/x.svg.jinja' %}
+                </a>
             </div>
             {% endfor %}
             {% for success in flashes.success %}
-            <div class="success">
+            <div class="message primary">
                 <p>{{ success }}</p>
+                <a class="close icon-button success" onclick="this.parentElement.remove()">
+                    {% include 'snippets/x.svg.jinja' %}
+                </a>
             </div>
             {% endfor %}
-            {% endblock %}
-        </div>
+        </section>
+        {% endblock %}
     </main>
 </body>
 

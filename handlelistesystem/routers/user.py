@@ -1,19 +1,15 @@
 from datetime import timedelta
 from typing import Annotated
-from fastapi import APIRouter, Depends, Form, Request
+from fastapi import APIRouter, Depends, Request
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from sqlalchemy import Engine
 from sqlmodel import Session
 
-from handlelistesystem.dependencies.auth import (
-    UserRedirectDependency,
-    authenticate_user,
-    create_access_token,
-)
+from handlelistesystem.dependencies.auth import UserRedirectDependency
 from handlelistesystem.helpers.flash import flash
-from handlelistesystem.models import User, UserRole
+from handlelistesystem.models import User
 
 RECENT_PURCHASES_DURATION = timedelta(hours=1)
 

@@ -9,7 +9,7 @@ from sqlalchemy.orm import selectinload
 from sqlmodel import Session, col, select
 
 from handlelistesystem.dependencies.auth import UserRedirectDependency
-from handlelistesystem.models import Item, UserRole
+from handlelistesystem.models import Item
 
 RECENT_PURCHASES_LENGHT = timedelta(hours=5)
 
