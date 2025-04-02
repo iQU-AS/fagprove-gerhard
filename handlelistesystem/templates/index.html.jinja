@@ -14,7 +14,8 @@
     <ul class="items">
         {% for item in items %}
         <li>
-            <button type="submit" name="id" value="{{ item.id }}" class="circle-check">
+            <button type="submit" name="id" value="{{ item.id }}" class="circle-check"
+                aria-label="Kjøp vare {{ item.name }}">
                 {% with arguments='class="circle neutral"' %}
                 {% include 'snippets/circle-nocheck.svg.jinja' %}
                 {% endwith %}
@@ -68,7 +69,8 @@
     <ul class="items">
         {% for item in recent_purchases %}
         <li>
-            <button class="circle-check" type="submit" name="id" value="{{ item.id }}">
+            <button class="circle-check" type="submit" name="id" value="{{ item.id }}"
+                aria-label="Fjern kjøp av {{ item.name }}">
                 {% with arguments='class="circle"' %}
                 {% include 'snippets/circle-check.svg.jinja' %}
                 {% endwith %}

@@ -21,10 +21,11 @@
                 <div class="name">{{ user.username }}</div>
             </div>
             <div class="actions">
-                <a class="icon-button primary ghost" href="/users/remove-admin/{{ user.id }}">
+                <a class="icon-button primary ghost" href="#" aria-label="Rediger bruker {{ user.username }}">
                     {% include 'snippets/edit.svg.jinja' %}
                 </a>
-                <a class="icon-button danger ghost" href="/users/{{ user.id }}/delete">
+                <a class="icon-button danger ghost" href="/users/{{ user.id }}/delete"
+                    aria-label="Slett bruker {{ user.username }}">
                     {% include 'snippets/trash.svg.jinja' %}
                 </a>
             </div>
