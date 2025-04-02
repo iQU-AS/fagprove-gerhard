@@ -1,5 +1,6 @@
 from datetime import timedelta
 from typing import Annotated
+import bcrypt
 from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
@@ -33,7 +34,7 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
 
     @router.get('/logout')
     def logout(request: Request):
-        flash(request, 'You have been logged out.', 'success')
+        flash(request, 'Du har logget ut.', 'success')
         response = RedirectResponse('/login')
         response.delete_cookie('access_token')
         return response
@@ -49,6 +50,10 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
                 post_user,
                 from_attributes=True,
             )
+            new_user.password = bcrypt.hashpw(
+                new_user.password.encode(),
+                bcrypt.gensalt(),
+            ).decode()
             session.add(new_user)
             session.commit()
 
