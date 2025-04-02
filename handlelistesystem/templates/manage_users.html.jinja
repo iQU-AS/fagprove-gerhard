@@ -32,7 +32,7 @@
         </li>
         {% endfor %}
     </ul>
-    <button class="list-add" onclick="document.querySelector('#add-user-modal').showModal()">
+    <button class="list-add" onclick="document.getElementById('add-item-modal').showModal()">
         <div class="icon">
             {% include 'snippets/plus.svg.jinja' %}
         </div>
@@ -62,7 +62,8 @@
                     </select>
                 </div>
                 <div class="button-row">
-                    <button class="button neutral" value="cancel" formmethod="dialog">Avbryt</button>
+                    <button class="button neutral" type="button"
+                        onclick="document.getElementById('add-user-modal').close()">Avbryt</button>
                     <button class="button primary" type="submit">Opprett</button>
                 </div>
             </form>
