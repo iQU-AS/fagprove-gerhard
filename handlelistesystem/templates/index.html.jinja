@@ -34,6 +34,8 @@
                 </a>
             </div>
         </li>
+        {% else %}
+        <li class="empty">Handlelisten er tom!</li>
         {% endfor %}
     </ul>
 </form>
@@ -82,6 +84,8 @@
                 </div>
             </div>
         </li>
+        {% else %}
+        <li class="empty">Ingen nylige kjøp</li>
         {% endfor %}
     </ul>
 </form>

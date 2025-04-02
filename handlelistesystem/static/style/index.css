@@ -40,6 +40,13 @@
     gap: 0.5rem;
 }
 
+.items .empty {
+    background: none;
+    color: var(--text-2);
+    font-style: italic;
+    padding: 0;
+}
+
 .circle-check {
     padding: 0.3em;
     user-select: none;
