@@ -75,7 +75,7 @@ class UserRole(Enum):
 
 class User(SQLModel, table=True):
     id: Annotated[int | None, Field(primary_key=True)] = None
-    username: str
+    username: Annotated[str, Field(index=True, unique=True)]
     password: str
 
     role: UserRole
