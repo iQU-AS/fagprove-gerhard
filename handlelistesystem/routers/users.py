@@ -1,6 +1,6 @@
 from datetime import timedelta
 from typing import Annotated
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
@@ -10,6 +10,12 @@ from sqlmodel import Session, delete, select
 from handlelistesystem.dependencies.auth import UserRedirectDependency
 from handlelistesystem.helpers.flash import flash
 from handlelistesystem.models import User, UserRole
+
+
+class UserDTO(BaseModel):
+    username: str
+    password: str
+    role: UserRole
 
 
 def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
@@ -31,6 +37,23 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
         response = RedirectResponse('/login')
         response.delete_cookie('access_token')
         return response
+
+    @router.post('/add')
+    def post_user(
+        request: Request,
+        user: Annotated[User, Depends(UserRedirectDependency(engine, role=UserRole.ADMIN))],
+        post_user: Annotated[UserDTO, Form(...)],
+    ):
+        with Session(engine) as session:
+            new_user = User.model_validate(
+                post_user,
+                from_attributes=True,
+            )
+            session.add(new_user)
+            session.commit()
+
+        flash(request, 'Bruker opprettet.', 'success')
+        return RedirectResponse('/users/manage-users', status_code=303)
 
     @router.get('/{user_id}/delete')
     def delete_user(

@@ -18,7 +18,7 @@
 }
 
 * {
-    box-sizing: border-box;
+    box-sizing: border-box !important;
 }
 
 html {
@@ -88,49 +88,6 @@ h1 {
 h2 {
     font-size: 1.4rem;
 }
-
-.button {
-    font-size: 1.2rem;
-    text-align: center;
-    font-weight: bold;
-    padding: 0.6em 1.2em;
-    border-radius: 0.7rem;
-    background: var(--default-color);
-    transition: 0.2s;
-    user-select: none;
-    cursor: pointer;
-}
-
-.button:hover, .button:focus-visible {
-    color: var(--opposite-text-1);
-    background: var(--alternate-default-color);
-}
-
-.icon-button {
-    padding: 0.4em;
-    border-radius: 0.5em;
-    background: var(--default-color);
-    transition: 0.2s;
-    user-select: none;
-    cursor: pointer;
-}
-
-.icon-button:hover, .icon-button:focus-visible {
-    background: var(--alternate-default-color);
-    color: var(--opposite-text-1)
-}
-
-.icon-button svg {
-    display: block;
-    width: 1.2em;
-    height: 1.2em;
-}
-
-.ghost {
-    background: none;
-    color: var(--alternate-default-color);
-}
-
 
 .primary {
     --default-color: var(--primary);

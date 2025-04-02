@@ -34,3 +34,7 @@
     display: flex;
     gap: 0.5rem;
 }
+
+.list-add {
+    margin-top: 0.5rem;
+}

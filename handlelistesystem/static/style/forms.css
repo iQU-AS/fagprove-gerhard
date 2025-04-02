@@ -4,30 +4,35 @@
     gap: 1.5em;
 }
 
-.form-section form .form-entry {
+.form-section .form-entry {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
 }
 
-.form-section form label {
+.form-section label {
     color: var(--text-2);
+    margin-bottom: 0.5em;
 }
 
-.form-section form input[type="text"],
-.form-section form input[type="email"],
-.form-section form input[type="password"] {
+.form-section input[type="text"],
+.form-section input[type="email"],
+.form-section input[type="password"],
+.form-section select {
+    display: block;
+    width: 100%;
     font-size: 1.2rem;
     padding: 0.5em 0.8em;
     border-radius: 0.7rem;
     border: 2px solid var(--background-3);
     background: #444845;
+    color: var(--text-1);
     transition: 0.2s;
 }
 
-.form-section form input[type="text"]:focus,
-.form-section form input[type="email"]:focus,
-.form-section form input[type="password"]:focus {
+.form-section input[type="text"]:focus,
+.form-section input[type="email"]:focus,
+.form-section input[type="password"]:focus,
+.form-section select:focus {
     border: 2px solid var(--primary);
 
 }
@@ -43,35 +48,4 @@
 
 .button-row * {
     flex: 1;
-}
-
-.form-section .errors {
-    margin-top: 1rem;
-    display: block;
-    background-color: var(--danger);
-    border-radius: 0.7rem;
-    border-bottom: solid var(--alternate-danger) 5px;
-    padding: 1em;
-}
-
-.form-section .errors h2 {
-    margin-top: 0;
-}
-
-.form-section .errors ul {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-}
-
-.form-section .errors li {
-    all: revert;
-}
-
-.form-section .success {
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--alternate-primary);
-    text-align: center;
 }

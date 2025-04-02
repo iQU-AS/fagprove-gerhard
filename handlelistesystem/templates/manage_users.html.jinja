@@ -4,6 +4,7 @@
 {{ super() }}
 <link rel="stylesheet" href="/static/style/manage_users.css">
 <link rel="stylesheet" href="/static/style/forms.css">
+<link rel="stylesheet" href="/static/style/dialog.css">
 <title>Handleliste - Behandle brukere</title>
 {% endblock %}
 
@@ -30,5 +31,42 @@
         </li>
         {% endfor %}
     </ul>
+    <button class="list-add" onclick="document.querySelector('#add-user-modal').showModal()">
+        <div class="icon">
+            {% include 'snippets/plus.svg.jinja' %}
+        </div>
+        <span>Ny bruker</span>
+    </button>
 </section>
+
+<dialog id="add-user-modal">
+    <div class="dialog-content">
+        <h2>Ny bruker</h2>
+        <div class="form-section">
+            <form action="/users/add" method="POST">
+                <div class="form-entry">
+                    <label for="username">Brukernavn*</label>
+                    <input type="text" name="username" autocomplete="off" required>
+                </div>
+                <div class="form-entry">
+                    <label for="password">Passord*</label>
+                    <input type="password" name="password" required>
+                </div>
+                <div class="form-entry">
+                    <label for="role">Rolle*</label>
+                    <select name="role" required>
+                        <option value="viewer">VIEWER</option>
+                        <option value="member">MEMBER</option>
+                        <option value="admin">ADMIN</option>
+                    </select>
+                </div>
+                <div class="button-row">
+                    <button class="button neutral" value="cancel" formmethod="dialog">Avbryt</button>
+                    <button class="button primary" type="submit">Opprett</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</dialog>
 {% endblock %}
