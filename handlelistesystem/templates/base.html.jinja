@@ -16,19 +16,22 @@
 </head>
 
 <body>
-    <nav>
-        {% block nav %}
-        <ul>
-            <li><a class="site-title" href="/">Handleliste</a></li>
-            <div class="links">
-                <li><a href="/history">Historikk</a></li>
-                <li><a href="/users/me">Min side</a></li>
-            </div>
-        </ul>
-        {% endblock %}
-    </nav>
+    <header>
+        <a href="#content" class="skip">Hopp til innhold</a>
+        <nav>
+            {% block nav %}
+            <ul>
+                <li><a class="site-title" href="/">Handleliste</a></li>
+                <div class="links">
+                    <li><a href="/history">Historikk</a></li>
+                    <li><a href="/users/me">Min side</a></li>
+                </div>
+            </ul>
+            {% endblock %}
+        </nav>
+    </header>
     <main>
-        <div class="content">
+        <div class="content" id="content">
             {% block content %}
             {% endblock %}
         </div>
