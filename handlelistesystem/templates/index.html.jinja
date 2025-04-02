@@ -24,10 +24,10 @@
                 {% endwith %}
             </button>
             <div class="info">
-                <span class="name">{{ item.name }}</span>
-                <div class="user-info">
-                    <span>Etterspurt: {{ item.created_by_user.username or '...' }}</span>
-                </div>
+                <p class="name">{{ item.name }}</p>
+                <p class="user-info">
+                    Etterspurt: {{ item.created_by_user.username or '...' }}
+                </p>
             </div>
             <div class="actions">
                 <a class="icon-button danger ghost" href="/delete/{{ item.id }}">
@@ -79,11 +79,11 @@
                 {% endwith %}
             </button>
             <div class="info">
-                <span class="name">{{ item.name }}</span>
-                <div class="user-info">
-                    <span>Etterspurt: {{ item.created_by_user.username or '...'}}</span><span>, kjøpt: {{
-                        item.purchased_by_user.username or '...'}}</span>
-                </div>
+                <p class="name">{{ item.name }}</p>
+                <p class="user-info">
+                    Etterspurt: {{ item.created_by_user.username or '...'}} kjøpt: {{ item.purchased_by_user.username or
+                    '...'}}
+                </p>
             </div>
         </li>
         {% else %}

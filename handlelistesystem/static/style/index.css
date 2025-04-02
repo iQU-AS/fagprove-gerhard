@@ -24,12 +24,16 @@
     gap: 0.1rem;
 }
 
+.items li .info p {
+    margin: 0;
+}
+
 .items li .info .name {
     font-size: 1rem;
     font-weight: bold;
 }
 
-.items li .info .user-info {
+.items li .user-info {
     font-size: 0.9rem;
     color: var(--text-2);
 }
