@@ -1,0 +1,40 @@
+.users ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.users li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    
+    border-radius: 0.7rem;
+    background-color: var(--background-2);
+    padding: 0.5rem 1rem;}
+
+.users li .info {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.users li .info .name {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.users li .info .role {
+    color: var(--text-2);
+    font-weight: bold;
+    min-width: 5rem;
+}
+
+.users li .actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.list-add {
+    margin-top: 0.5rem;
+}

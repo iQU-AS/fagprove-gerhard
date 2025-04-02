@@ -1,0 +1,31 @@
+{% extends "base.html.jinja" %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/static/style/user.css">
+<link rel="stylesheet" href="/static/style/forms.css">
+<title>Handleliste - Min side</title>
+{% endblock %}
+
+{% block content %}
+<h1>Min side</h1>
+
+<section class="user-info">
+    <h2>Brukerinformasjon</h2>
+    <p><strong>Brukernavn:</strong> {{ user.username }}</p>
+    <p><strong>Rolle:</strong> {{ user.role.value|upper }}</p>
+</section>
+
+<section class="actions">
+    {% if user.role.value == 'admin' %}
+    <a class="button neutral" href="/users/manage-users">Behandle brukere</a>
+    {% endif %}
+    <a class="button neutral" href="/users/logout">Logg ut</a>
+    <button class="button neutral" onclick="document.querySelector('#change-password-modal').showModal()">Endre
+        passord</button>
+    <a class="button danger" href="/users/{{ user.id }}/delete">Slett
+        konto</a>
+</section>
+
+
+{% endblock %}

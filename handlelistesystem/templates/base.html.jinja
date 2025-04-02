@@ -1,32 +1,60 @@
 <!DOCTYPE html>
 <html lang="no">
 
+{% set flashes = get_flashed_messages(request) %}
+
 <head>
     {% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
     <link rel="stylesheet" href="/static/style/global.css">
+    <link rel="stylesheet" href="/static/style/flashes.css">
     <link rel="stylesheet" href="/static/style/nav.css">
+    <link rel="stylesheet" href="/static/style/buttons.css">
     {% endblock %}
 </head>
 
 <body>
-    <nav>
-        {% block nav %}
-        <ul>
-            <li><a class="site-title" href="/">Handleliste</a></li>
-            <div class="links">
-                <li><a href="/history">Historikk</a></li>
-            </div>
-        </ul>
-        {% endblock %}
-    </nav>
+    <header>
+        <a href="#content" class="skip">Hopp til innhold</a>
+        <nav>
+            {% block nav %}
+            <ul>
+                <li><a class="site-title" href="/">Handleliste</a></li>
+                <div class="links">
+                    <li><a href="/history">Historikk</a></li>
+                    <li><a href="/users/me">Min side</a></li>
+                </div>
+            </ul>
+            {% endblock %}
+        </nav>
+    </header>
     <main>
-        <div class="content">
+        <div class="content" id="content">
             {% block content %}
             {% endblock %}
         </div>
+        {% block flashes %}
+        <section class="flashes">
+            {% for error in flashes.error %}
+            <div class="message danger">
+                <p>{{ error }}</p>
+                <a class="close icon-button danger" onclick="this.parentElement.remove()">
+                    {% include 'snippets/x.svg.jinja' %}
+                </a>
+            </div>
+            {% endfor %}
+            {% for success in flashes.success %}
+            <div class="message primary">
+                <p>{{ success }}</p>
+                <a class="close icon-button success" onclick="this.parentElement.remove()">
+                    {% include 'snippets/x.svg.jinja' %}
+                </a>
+            </div>
+            {% endfor %}
+        </section>
+        {% endblock %}
     </main>
 </body>
 

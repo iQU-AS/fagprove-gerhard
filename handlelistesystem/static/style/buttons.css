@@ -1,0 +1,81 @@
+
+.button {
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: bold;
+    padding: 0.6em 1.2em;
+    border-radius: 0.7rem;
+    background: var(--default-color);
+    transition: 0.2s;
+    user-select: none;
+    cursor: pointer;
+}
+
+.button:hover, .button:focus-visible {
+    color: var(--opposite-text-1);
+    background: var(--alternate-default-color);
+}
+
+.icon-button {
+    padding: 0.4em;
+    border-radius: 0.5em;
+    background: var(--default-color);
+    transition: 0.2s;
+    user-select: none;
+    cursor: pointer;
+}
+
+.icon-button:hover, .icon-button:focus-visible {
+    background: var(--alternate-default-color);
+    color: var(--opposite-text-1)
+}
+
+.icon-button svg {
+    display: block;
+    width: 1.2em;
+    height: 1.2em;
+}
+
+
+.ghost {
+    background: none;
+    color: var(--alternate-default-color);
+}
+
+.list-add {
+    font-size: 1rem;
+    text-align: center;
+    font-weight: bold;
+    padding: 0.5em 0.5em;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.list-add * {
+    transition: 0.2s;
+}
+
+.list-add .icon {
+    padding: 0.3rem;
+}
+
+.list-add svg {
+    color: var(--alternate-default-color);
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 100%;
+    padding: 0.1em;
+}
+
+.list-add:hover svg, .list-add:focus-visible svg {
+    background-color: var(--alternate-primary);
+    color: var(--opposite-text-1);
+}
+
+.list-add:hover span, .list-add:focus-visible span {
+    color: var(--alternate-default-color);
+}

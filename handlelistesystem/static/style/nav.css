@@ -1,3 +1,20 @@
+.skip {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    padding: 0.5rem;
+    background-color: var(--primary);
+    font-weight: bold;
+    text-decoration: underline !important;
+    clip: rect(0,0,0,0);
+}
+
+.skip:focus {
+    clip: auto;
+    z-index: 1000;
+}
+
+
 nav {
     display: flex;
     justify-content: center;
@@ -26,7 +43,7 @@ nav a {
     transition: 0.2s;
 }
 
-nav a:hover {
+nav a:hover, nav a:focus {
     background-color: var(--background-15);
 }
 
@@ -35,3 +52,8 @@ nav .site-title {
     font-weight: bold;
 }
 
+@media screen and (max-width: 45rem) {
+    nav {
+        padding: 0.5rem 0.5rem;
+    }
+}

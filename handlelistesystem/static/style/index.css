@@ -18,10 +18,37 @@
     gap: 0.5rem;
 }
 
+.items li .info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.items li .info p {
+    margin: 0;
+}
+
+.items li .info .name {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.items li .user-info {
+    font-size: 0.9rem;
+    color: var(--text-2);
+}
+
 .items li .actions {
     margin-left: auto;
     display: flex;
     gap: 0.5rem;
+}
+
+.items .empty {
+    background: none;
+    color: var(--text-2);
+    font-style: italic;
+    padding: 0;
 }
 
 .circle-check {
@@ -51,61 +78,14 @@
     color: var(--alternate-default-color);
 }
 
-.circle-check:hover .checkmark {
+.circle-check:hover .checkmark, .circle-check:focus .checkmark {
     opacity: 1;
 }
 
-.circle-check:hover .circle {
+.circle-check:hover .circle, .circle-check:focus .circle {
     opacity: 0;
 }
 
-.add-task {
-    font-size: 1rem;
-    text-align: center;
-    font-weight: bold;
-    padding: 0.5em 0.5em;
-    user-select: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.add-task * {
-    transition: 0.2s;
-}
-
-.add-task .icon {
-    padding: 0.3rem;
-}
-
-.add-task svg {
-    color: var(--alternate-default-color);
-    display: block;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 100%;
-    padding: 0.1em;
-}
-
-.add-task:hover svg, .add-task:focus-visible svg {
-    background-color: var(--alternate-primary);
-    color: var(--opposite-text-1);
-}
-
-.add-task:hover span, .add-task:focus-visible span {
-    color: var(--alternate-default-color);
-}
-
-.button-row {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-    justify-content: stretch;
-    width: 100%;
-}
-
-.button-row * {
-    flex: 1;
+.list-add {
+    margin-top: 0.5rem;
 }

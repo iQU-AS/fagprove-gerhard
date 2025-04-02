@@ -14,7 +14,8 @@
     <ul class="items">
         {% for item in items %}
         <li>
-            <button type="submit" name="id" value="{{ item.id }}" class="circle-check">
+            <button type="submit" name="id" value="{{ item.id }}" class="circle-check"
+                aria-label="Kjøp vare {{ item.name }}">
                 {% with arguments='class="circle neutral"' %}
                 {% include 'snippets/circle-nocheck.svg.jinja' %}
                 {% endwith %}
@@ -22,13 +23,20 @@
                 {% include 'snippets/circle-check.svg.jinja'%}
                 {% endwith %}
             </button>
-            <span>{{ item.name }}</span>
+            <div class="info">
+                <p class="name">{{ item.name }}</p>
+                <p class="user-info">
+                    Etterspurt: {{ item.created_by_user.username or '...' }}
+                </p>
+            </div>
             <div class="actions">
                 <a class="icon-button danger ghost" href="/delete/{{ item.id }}">
                     {% include 'snippets/trash.svg.jinja' %}
                 </a>
             </div>
         </li>
+        {% else %}
+        <li class="empty">Handlelisten er tom!</li>
         {% endfor %}
     </ul>
 </form>
@@ -39,7 +47,7 @@
             <form action="/add" method="POST">
                 <div class="form-entry">
                     <label for="name">Navn*</label>
-                    <input type="text" name="name">
+                    <input type="text" name="name" autocomplete="off" required>
                 </div>
                 <div class="button-row">
                     <button class="button neutral" value="cancel" formmethod="dialog">Avbryt</button>
@@ -49,7 +57,7 @@
         </div>
     </div>
 </dialog>
-<button class="add-task" onclick="document.querySelector('#add-item-modal').showModal()">
+<button class="list-add" onclick="document.querySelector('#add-item-modal').showModal()">
     <div class="icon">
         {% include 'snippets/plus.svg.jinja' %}
     </div>
@@ -61,7 +69,8 @@
     <ul class="items">
         {% for item in recent_purchases %}
         <li>
-            <button class="circle-check" type="submit" name="id" value="{{ item.id }}">
+            <button class="circle-check" type="submit" name="id" value="{{ item.id }}"
+                aria-label="Fjern kjøp av {{ item.name }}">
                 {% with arguments='class="circle"' %}
                 {% include 'snippets/circle-check.svg.jinja' %}
                 {% endwith %}
@@ -69,8 +78,16 @@
                 {% include 'snippets/circle-nocheck.svg.jinja'%}
                 {% endwith %}
             </button>
-            <span>{{item.name}}</span>
+            <div class="info">
+                <p class="name">{{ item.name }}</p>
+                <p class="user-info">
+                    Etterspurt: {{ item.created_by_user.username or '...'}} kjøpt: {{ item.purchased_by_user.username or
+                    '...'}}
+                </p>
+            </div>
         </li>
+        {% else %}
+        <li class="empty">Ingen nylige kjøp</li>
         {% endfor %}
     </ul>
 </form>
