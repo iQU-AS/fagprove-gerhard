@@ -74,11 +74,11 @@
     color: var(--alternate-default-color);
 }
 
-.circle-check:hover .checkmark {
+.circle-check:hover .checkmark, .circle-check:focus .checkmark {
     opacity: 1;
 }
 
-.circle-check:hover .circle {
+.circle-check:hover .circle, .circle-check:focus .circle {
     opacity: 0;
 }
 

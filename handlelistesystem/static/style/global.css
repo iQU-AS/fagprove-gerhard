@@ -1,6 +1,6 @@
 :root {
-    --primary: #658C3D;
-    --alternate-primary: #b0d98f;
+    --primary: #5a7e37;
+    --alternate-primary: #a4d17f;
     --neutral: #5e5e5e;
     --alternate-neutral: #8c8c8c;
     --text-1: white;
@@ -19,6 +19,10 @@
 
 * {
     box-sizing: border-box !important;
+}
+
+*:focus-visible {
+    outline: 3px solid var(--alternate-primary);
 }
 
 html {
