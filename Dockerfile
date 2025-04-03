@@ -10,6 +10,7 @@ COPY ./pyproject.toml /code/pyproject.toml
 RUN pip install --no-cache-dir --upgrade /code
 
 COPY ./handlelistesystem /code/handlelistesystem
+COPY ./scripts /code/scripts
 
 EXPOSE 80
 
