@@ -1,10 +1,14 @@
 from datetime import UTC, datetime
 from enum import Enum
 from typing import Annotated, Optional
+import logging
+import bcrypt
 from sqlalchemy import Engine
-from sqlmodel import Field, Relationship, SQLModel, create_engine, text
+from sqlmodel import Field, Relationship, SQLModel, Session, create_engine, select, text
 
 from handlelistesystem.config import SQLITE_DB
+
+logger = logging.getLogger(__name__)
 
 
 def create_db_and_tables(engine: Engine):
@@ -12,6 +16,22 @@ def create_db_and_tables(engine: Engine):
     with engine.connect() as connection:
         # Enable foreign key constraints
         connection.execute(text('PRAGMA foreign_keys=ON'))
+
+    # Create the initial user if no user exists
+    with Session(engine) as session:
+        initial_user = session.exec(select(User)).first()
+        if not initial_user:
+            password = b'admin'
+            hashed_password = bcrypt.hashpw(password, bcrypt.gensalt()).decode()
+
+            initial_user = User(
+                username='admin',
+                password=hashed_password,
+                role=UserRole.ADMIN,
+            )
+            session.add(initial_user)
+            session.commit()
+            logger.info('Created inital admin user...')
 
 
 def setup_engine():
