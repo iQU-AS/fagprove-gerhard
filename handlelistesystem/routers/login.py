@@ -47,7 +47,14 @@ def create_router(engine: Engine, templates: Jinja2Templates):  # noqa C901
         access_token = create_access_token(
             user_id=user.id,
         )
-        response.set_cookie(key='access_token', value=access_token, expires='Session')
+        response.set_cookie(
+            key='access_token',
+            value=access_token,
+            expires='Session',
+            httponly=True,
+            samesite='strict',
+            secure=False,  # TODO set to True in production
+        )
 
         return response
 
