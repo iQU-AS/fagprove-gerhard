@@ -48,10 +48,28 @@
     border-top: solid 2px var(--background-3);
 }
 
+.history-day li p {
+    margin: 0;
+}
+
 .history-day .name {
     font-size: 1.1rem;
     font-weight: bold;
 }
+
+.history-day .info {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+
+
+.history-day .user-info {
+    font-size: 0.9rem;
+    color: var(--text-2);
+}
+
 .history-day .time {
     color: var(--text-2);
 }

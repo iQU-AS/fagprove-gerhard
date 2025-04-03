@@ -30,10 +30,12 @@
         <ul>
             {% for item in items %}
             <li>
-                <span class="name">{{ item.name }}</span>
-                <span>{{ item.created_by_user.username }}</span>
-                <span>{{ item.purchased_by_user.username }}</span>
-                <span class="time">{{ item.purchased_at.strftime('%H:%M') }}</span>
+                <p class="name">{{ item.name }}</p>
+                <div class="info">
+                    <p class="user-info">Etterspurt: {{ item.created_by_user.username }}, kjøpt: {{
+                        item.purchased_by_user.username }}</p>
+                    <p class="time">{{ item.purchased_at.strftime('%H:%M') }}</p>
+                </div>
             </li>
             {% if not loop.last %}
             <hr>
